@@ -1,30 +1,38 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div class="container">
+    <ColumnList :list="list" />
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import { defineComponent } from "vue";
+import "bootstrap/dist/css/bootstrap.min.css";
+import ColumnList, { ColumnProps } from "./components/ColumnList.vue";
+const testData: ColumnProps[] = [
+  {
+    id: 1,
+    title: "标题",
+    description: "描述",
+    avatar: require("./assets/logo.png"),
+  },
+  {
+    id: 2,
+    title: "标题",
+    description: "描述",
+    avatar: require("./assets/logo.png"),
+  },
+];
+export default defineComponent({
+  components: {
+    ColumnList,
+  },
+  setup() {
+    return {
+      list: testData,
+    };
+  },
+});
+</script>
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>
