@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { computed, defineComponent, PropType } from "vue";
 export interface ColumnProps {
   id: number;
   title: string;
@@ -29,6 +29,19 @@ export default defineComponent({
       type: Array as PropType<ColumnProps[]>,
       required: true,
     },
+  },
+  setup(props) {
+    const columnList = computed(() => {
+      return props.list.map((column) => {
+        if (column.avatar) {
+          column.avatar = require("@/assets/logo.png");
+        }
+        return column;
+      });
+    });
+    return {
+      columnList,
+    };
   },
 });
 </script>
