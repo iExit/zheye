@@ -11,7 +11,7 @@
           <DrowdownItem>
             <a href="#" class="dropdown-item">新建文章</a></DrowdownItem
           >
-          <DrowdownItem :disabled="true">
+          <DrowdownItem disabled>
             <a href="#" class="dropdown-item">编辑资料</a></DrowdownItem
           >
           <DrowdownItem>
@@ -25,8 +25,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import Drowdown from "./Drowdown.vue";
-import DrowdownItem from "./DrowdownItem.vue";
+import Drowdown from "./Dropdown.vue";
+import DrowdownItem from "./DropdownItem.vue";
 export interface UserProps {
   isLogin: boolean;
   name?: string;

@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div class="dropdown" ref="dropdownRef">
     <button
       class="btn btn-secondary dropdown-toggle"
       type="button"
@@ -22,7 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watch } from "vue";
+import useClickOutside from "../hooks/useClickOutside";
 export default defineComponent({
   name: "Drowdown",
   props: {
@@ -36,9 +37,17 @@ export default defineComponent({
     const toggleOpen = () => {
       isOpen.value = !isOpen.value;
     };
+    const dropdownRef = ref<null | HTMLElement>(null);
+    const isClickOutside = useClickOutside(dropdownRef);
+    watch(isClickOutside, () => {
+      if (isOpen.value && isClickOutside.value) {
+        isOpen.value = false;
+      }
+    });
     return {
       isOpen,
       toggleOpen,
+      dropdownRef,
     };
   },
 });
