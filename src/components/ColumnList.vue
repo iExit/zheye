@@ -33,12 +33,13 @@ export default defineComponent({
   setup(props) {
     const columnList = computed(() => {
       return props.list.map((column) => {
-        if (column.avatar) {
+        if (!column.avatar) {
           column.avatar = require("@/assets/logo.png");
         }
         return column;
       });
     });
+    console.log(columnList);
     return {
       columnList,
     };
