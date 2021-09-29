@@ -1,74 +1,51 @@
 <template>
   <div class="container">
     <GlobalHeader :user="currentUser" />
-    <form>
+    <!-- <ValidateForm @form-submit="onFormSubmit">
       <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
+        <label class="form-label">邮箱地址</label>
         <ValidateInput
           type="text"
           placeholder="请输入邮箱地址"
           :rules="emailRules"
           v-model="emailValue"
         />
-        {{ emailValue }}
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">密码</label>
-        <input
+        <label class="form-label">密码</label>
+        <ValidateInput
           type="password"
-          class="form-control"
-          id="exampleInputPassword1"
+          placeholder="请输入密码"
+          :rules="passwordRules"
+          v-model="passwordValue"
         />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      <template #submit>
+        <span class="btn btn-danger">提交</span>
+      </template>
+    </ValidateForm> -->
+    <router-view />
     <!-- <ColumnList :list="list" /> -->
+    <GlobalFooter />
   </div>
-  <router-view />
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ColumnList, { ColumnProps } from "./components/ColumnList.vue";
 import GlobalHeader, { UserProps } from "./components/GlobalHeader.vue";
+import GlobalFooter from "./components/GlobalFooter.vue";
 import ValidateInput, { RulesProp } from "./components/ValidateInput.vue";
-const testData: ColumnProps[] = [
-  {
-    id: 1,
-    title: "标题",
-    description: "描述",
-    avatar:
-      "https://publish-pic-cpu.baidu.com/baab901d-7b89-476c-9bae-72cc2db93239.jpeg@w_228,h_152",
-  },
-  {
-    id: 2,
-    title: "标题",
-    description: "描述",
-    avatar: require("./assets/logo.png"),
-  },
-  {
-    id: 3,
-    title: "标题",
-    description: "描述",
-    avatar: null,
-  },
-  {
-    id: 4,
-    title: "标题",
-    description: "描述",
-    avatar: null,
-  },
-];
+import ValidateForm from "./components/ValidateForm.vue";
+
 const currentUser: UserProps = {
   isLogin: true,
   name: "cici",
 };
 export default defineComponent({
   components: {
-    ColumnList,
     GlobalHeader,
-    ValidateInput,
+    GlobalFooter,
   },
   setup() {
     const emailValue = ref("");
@@ -76,11 +53,20 @@ export default defineComponent({
       { type: "required", message: "不能为空" },
       { type: "email", message: "格式不正确" },
     ];
+    const passwordValue = ref("");
+    const passwordRules: RulesProp = [
+      { type: "required", message: "不能为空" },
+    ];
+    const onFormSubmit = (result: any) => {
+      console.log(result);
+    };
     return {
-      list: testData,
       currentUser,
-      emailRules,
       emailValue,
+      emailRules,
+      passwordValue,
+      passwordRules,
+      onFormSubmit,
     };
   },
 });

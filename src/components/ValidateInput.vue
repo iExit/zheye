@@ -14,7 +14,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, reactive } from "vue";
+import { defineComponent, onMounted, PropType, reactive } from "vue";
+import { emitter } from "./ValidateForm.vue";
 const emailReg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 interface RuleProp {
   type: "required" | "email"; // 可扩展
@@ -58,8 +59,13 @@ export default defineComponent({
           return passed;
         });
         inputRef.error = !allPassed;
+        return allPassed;
       }
+      return true;
     };
+    onMounted(() => {
+      emitter.emit("form-item-created", validateInput);
+    });
     return {
       inputRef,
       validateInput,
