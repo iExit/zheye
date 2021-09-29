@@ -4,10 +4,13 @@
     <form>
       <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">邮箱地址</label>
-        <ValidateInput :rules="emailRules" />
-        <div class="form-text" v-if="emailRef.error">
-          {{ emailRef.message }}
-        </div>
+        <ValidateInput
+          type="text"
+          placeholder="请输入邮箱地址"
+          :rules="emailRules"
+          v-model="emailValue"
+        />
+        {{ emailValue }}
       </div>
       <div class="mb-3">
         <label for="exampleInputPassword1" class="form-label">密码</label>
@@ -25,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ColumnList, { ColumnProps } from "./components/ColumnList.vue";
 import GlobalHeader, { UserProps } from "./components/GlobalHeader.vue";
@@ -68,6 +71,7 @@ export default defineComponent({
     ValidateInput,
   },
   setup() {
+    const emailValue = ref("");
     const emailRules: RulesProp = [
       { type: "required", message: "不能为空" },
       { type: "email", message: "格式不正确" },
@@ -76,6 +80,7 @@ export default defineComponent({
       list: testData,
       currentUser,
       emailRules,
+      emailValue,
     };
   },
 });
